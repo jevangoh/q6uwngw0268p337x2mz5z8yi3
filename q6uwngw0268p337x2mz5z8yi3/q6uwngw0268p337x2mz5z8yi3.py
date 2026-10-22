@@ -12,16 +12,16 @@ class Thread(QThread):
         self.host: str = host
         self.port: int = port
         self.redis: Redis = Redis(host=host, port=port, decode_responses=True)
-        self.subscriptions_queue: Queue = Queue()
-        self.unsubscriptions_queue: Queue = Queue()
+        self.subscriptions_queue: Queue[str] = Queue()
+        self.unsubscriptions_queue: Queue[str] = Queue()
 
-    def subscribe(self, channel_name: str):
+    def subscribe(self, channel_name: str) -> None:
         self.subscriptions_queue.put(channel_name)
 
-    def unsubscribe(self, channel_name: str):
+    def unsubscribe(self, channel_name: str) -> None:
         self.unsubscriptions_queue.put(channel_name)
 
-    def run(self):
+    def run(self) -> None:
         _subscriber_: Subscriber = self.redis.pubsub()
 
         try:
