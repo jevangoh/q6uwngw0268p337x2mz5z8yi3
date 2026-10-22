@@ -1,0 +1,72 @@
+[data-md-color-scheme="slate"] {
+  /* --- Primary --- */
+  --md-primary-fg-color: rgb(158, 147, 133);
+  --md-primary-fg-color--light: rgba(58, 56, 55, 0);
+  --md-primary-fg-color--dark: rgb(10, 9, 9);
+
+  /* --- Accent --- */
+  /* --md-accent-fg-color: rgb(118, 79, 40); */
+  --md-accent-fg-color: rgb(158, 147, 133);
+  --md-accent-fg-color--transparent: rgba(118, 79, 40, 0.15);
+
+  /* --- Text --- */
+  --md-default-fg-color: rgb(131, 132, 138);
+  --md-typeset-color: rgb(131, 132, 138);
+  --md-typeset-headline-color: rgb(131, 132, 138);
+}
+
+[data-md-color-scheme="slate"] .md-header__topic {
+  color: rgb(131, 132, 138);
+}
+
+[data-md-color-scheme="slate"] .md-header {
+  background-color: rgba(118, 79, 40, 0.15);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px); /* Safari support */
+}
+
+[data-md-color-scheme="slate"] .md-typeset h1,
+[data-md-color-scheme="slate"] .md-typeset h2,
+[data-md-color-scheme="slate"] .md-typeset h3,
+[data-md-color-scheme="slate"] .md-typeset h4,
+[data-md-color-scheme="slate"] .md-typeset h5,
+[data-md-color-scheme="slate"] .md-typeset h6 {
+  color: rgb(158, 147, 133);
+}
+
+/* --- Customize the "note" Admonition for Slate Theme --- */
+[data-md-color-scheme="slate"] .md-typeset .admonition.note,
+[data-md-color-scheme="slate"] .md-typeset details.note {
+  border-color: rgba(18, 17, 17, 0.7) !important;
+  background-color: rgba(18, 17, 17, 0.7) !important;
+  --md-admonition-bg: rgba(18, 17, 17, 0.7) !important;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .note > .admonition-title,
+[data-md-color-scheme="slate"] .md-typeset .note > summary {
+  color: rgba(158, 147, 133, 0.5) !important;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .note > .admonition-title::before,
+[data-md-color-scheme="slate"] .md-typeset .note > summary::before {
+  background-color: rgba(158, 147, 133, 0.5) !important;
+}
+
+/* --- Customize the "warning" Admonition for Slate Theme --- */
+[data-md-color-scheme="slate"] .md-typeset .admonition.warning,
+[data-md-color-scheme="slate"] .md-typeset details.warning {
+  border-color: #f59e0b !important;
+  background-color: rgba(245, 158, 11, 0.05) !important;
+  --md-admonition-bg: rgba(245, 158, 11, 0.05) !important;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .warning > .admonition-title,
+[data-md-color-scheme="slate"] .md-typeset .warning > summary {
+  background-color: rgba(245, 158, 11, 0.1) !important;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .warning > .admonition-title::before,
+[data-md-color-scheme="slate"] .md-typeset .warning > summary::before {
+  background-color: #f59e0b !important;
+}

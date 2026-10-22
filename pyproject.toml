@@ -1,0 +1,135 @@
+######################################################################################################
+#                                              metadata                                              #
+######################################################################################################
+[project]
+name = "q6uwngw0268p337x2mz5z8yi3"
+dynamic = ["version"]
+
+requires-python = ">= 3.14"
+dependencies = []
+
+authors = [{name = "Jevan Goh", email = "javerngoh@gmail.com"}]
+
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling", "hatch-vcs"]
+
+[dependency-groups]
+build = [
+    "build>=1.5.0,<2"
+]
+dev = [
+    "ruff>=0.14.13,<0.15",
+    "prek>=0.2.30,<0.3",
+    "mypy>=1.19.1,<2",
+    "copier>=9.18.2,<10"
+]
+docs = [
+    "zensical>=0.0.47,<0.0.48",
+    "pymdown-extensions>=12.2,<13"
+]
+
+######################################################################################################
+#                                                pixi                                                #
+######################################################################################################
+[tool.pixi.workspace]
+channels = ["conda-forge"]
+platforms = ["win-64", "linux-64", "linux-aarch64"]
+
+[tool.pixi.target.linux-aarch64.activation]
+env = { LD_LIBRARY_PATH = "$LD_LIBRARY_PATH:$CONDA_PREFIX/lib" }
+
+[tool.pixi.pypi-options]
+extra-index-urls = ["https://jevangoh.github.io/as1oocnl0leb61sj1yew20lt2/"]
+
+[tool.pixi.pypi-dependencies]
+q6uwngw0268p337x2mz5z8yi3 = { path = ".", editable = true }
+
+# ==================================== defaults ====================================
+[tool.pixi.tasks]
+    
+# ==================================== environments ====================================
+# ----------------------------- dev -----------------------------
+[tool.pixi.environments.dev]
+features = ["dev", "docs", "build"]
+solve-group = "default"
+
+# ==================================== features ====================================
+# ----------------------------- dev -----------------------------
+[tool.pixi.feature.dev.dependencies]
+git = ">=2.56.0,<3"
+gh = ">=2.102.0,<3"
+nodejs = ">=26.10.0,<26.11"
+prettier = ">=3.9.6,<4"
+
+[tool.pixi.feature.dev.tasks]
+setup = "prek install"
+run_all_pre_commit_hooks = "prek run --all-files || true"
+
+lint_documents = "prettier --check --ignore-unknown"
+format_documents = "prettier --write --ignore-unknown"
+lint_all_documents = "prettier --check . --ignore-unknown"
+format_all_documents = "prettier --write . --ignore-unknown"
+
+update_template = "copier update --answers-file .copier_answers.yml --vcs-ref main"
+
+build_package = "python -m build"
+
+# ----------------------------- docs -----------------------------
+[tool.pixi.feature.docs.dependencies]
+curl = ">=8.22.0,<9"
+
+[tool.pixi.feature.docs.pypi-dependencies]
+markdown-gfm-admonition = ">=0.3.0, <0.4"
+
+[tool.pixi.feature.docs.tasks]
+build_docs = "zensical build --config-file zensical.toml"
+create_readthedocs = "curl -f -s -X POST https://app.readthedocs.org/api/v3/projects/ -H \"Authorization: Token $PA0DBVCU05YKU48G8HCUNB2G3\" -H \"Content-Type: application/json\" -d '{\"name\": \"q6uwngw0268p337x2mz5z8yi3\", \"repository\": {\"url\": \"https://github.com/jevangoh/q6uwngw0268p337x2mz5z8yi3\", \"type\": \"git\"}, \"default_branch\": \"main\", \"programming_language\": \"py\"}'"
+build_readthedocs = "curl -f -s -X POST https://app.readthedocs.org/api/v3/projects/q6uwngw0268p337x2mz5z8yi3/versions/main/builds/ -H \"Authorization: Token $PA0DBVCU05YKU48G8HCUNB2G3\""
+
+######################################################################################################
+#                                                ruff                                                #
+######################################################################################################
+[tool.ruff]
+src = ["."]
+exclude = ["node_modules", "venv", ".git", ".pixi"]
+line-length = 100
+indent-width = 4
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+docstring-code-format = true
+
+######################################################################################################
+#                                                mypy                                                #
+######################################################################################################
+[tool.mypy]
+mypy_path = "."
+exclude = ["node_modules", "venv", ".git", ".pixi", "build"]
+
+strict = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_unused_ignores = true
+warn_return_any = true
+warn_unreachable = true
+ignore_missing_imports = true
+
+######################################################################################################
+#                                                hatch                                               #
+######################################################################################################
+[tool.hatch.version]
+source = "vcs"
+fallback-version = "0.0.0+unknown"
+
+[tool.hatch.version.raw-options]
+local_scheme = "no-local-version"
+version_scheme = "post-release"
+
+
+

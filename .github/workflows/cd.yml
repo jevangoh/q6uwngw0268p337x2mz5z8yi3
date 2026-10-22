@@ -1,0 +1,86 @@
+name: Continuous Deployment
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Doppler CLI
+        uses: dopplerhq/cli-action@v3
+
+      - name: Load Secrets from Doppler
+        run: |
+          doppler secrets download --no-file --format=json | jq -r 'to_entries[] | "\(.key)=\(.value)"' | while read -r line; do
+            key="${line%%=*}"
+            value="${line#*=}"
+            if [ -n "$value" ]; then
+              echo "::add-mask::$value"
+              echo "$key=$value" >> $GITHUB_ENV
+            fi
+          done
+        env:
+          DOPPLER_TOKEN: ${{ secrets.AZU4V7WTFF38YLYNTQXQI0B7G }}
+
+      - name: Setup Pixi
+        uses: prefix-dev/setup-pixi@v0.8.0
+        with:
+          environments: dev
+          cache: true
+
+      - name: Build Package Distribution
+        run: pixi run -e dev build_package
+        env:
+          HATCH_VERSION: ${{ github.ref_name }}
+          SETUPTOOLS_SCM_PRETEND_VERSION: ${{ github.ref_name }}
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Construct Payload Variables
+        id: vars
+        run: |
+          PKG_NAME="${{ github.event.repository.name }}"
+          TAG="${{ github.event.release.tag_name || github.ref_name || inputs.tag }}"
+          VERSION="${TAG#v}"  # Strips leading 'v' if present (e.g., v0.0.1 -> 0.0.1)
+
+          WHL_NAME="${PKG_NAME}-${VERSION}-py3-none-any.whl"
+          TAR_NAME="${PKG_NAME}-${VERSION}.tar.gz"
+
+          WHL_URL="https://github.com/${{ github.repository }}/releases/download/${TAG}/${WHL_NAME}"
+          TAR_URL="https://github.com/${{ github.repository }}/releases/download/${TAG}/${TAR_NAME}"
+
+          echo "pkg_name=${PKG_NAME}" >> $GITHUB_OUTPUT
+          echo "tag=${TAG}" >> $GITHUB_OUTPUT
+          echo "whl_url=${WHL_URL}" >> $GITHUB_OUTPUT
+          echo "tar_url=${TAR_URL}" >> $GITHUB_OUTPUT
+
+      - name: Dispatch Event to PyPI Server Repo
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ env.BTGBB2FGU8K0Q51SC26F6X9F7 }}
+          repository: jevangoh/as1oocnl0leb61sj1yew20lt2
+          event-type: package-released
+          client-payload: |
+            {
+              "package_name": "${{ steps.vars.outputs.pkg_name }}",
+              "tag": "${{ steps.vars.outputs.tag }}",
+              "whl_url": "${{ steps.vars.outputs.whl_url }}",
+              "tar_url": "${{ steps.vars.outputs.tar_url }}"
+            }

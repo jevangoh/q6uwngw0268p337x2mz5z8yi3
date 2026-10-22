@@ -1,0 +1,29 @@
+[project]
+site_name = "q6uwngw0268p337x2mz5z8yi3"
+site_url = "https://dt9ezskevixgm3q01tdb3z8ak.readthedocs.io/en/latest/"
+site_description = ""
+site_author = "Jevan Goh"
+
+docs_dir = "documentation"
+
+nav = [
+  {"Home" = "index.md"}
+]
+
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme)"
+toggle.icon = "lucide/sun-moon"
+toggle.name = "Switch to light mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: light)"
+scheme = "default"
+toggle.icon = "lucide/sun"
+toggle.name = "Switch to dark mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: dark)"
+scheme = "slate"
+toggle.icon = "lucide/moon"
+toggle.name = "Switch to system preference"

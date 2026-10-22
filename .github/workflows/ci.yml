@@ -1,0 +1,49 @@
+name: Continuous Integration
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Pixi
+        uses: prefix-dev/setup-pixi@v0.8.0
+        with:
+          environments: dev
+          cache: true
+
+      - name: Run Ruff Check
+        run: pixi run -e dev ruff check .
+
+      - name: Run Ruff Format
+        run: pixi run -e dev ruff format .
+
+      - name: Run Mypy Type Checker
+        run: pixi run -e dev mypy .
+
+      - name: Check for drift
+        run: git diff --exit-code
+
+  other_documents:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Pixi
+        uses: prefix-dev/setup-pixi@v0.8.0
+        with:
+          environments: dev
+          cache: true
+
+      - name: Lint
+        run: pixi run -e dev lint_all_documents
+
+      - name: Format
+        run: pixi run -e dev format_all_documents
+
+      - name: Check for drift
+        run: git diff --exit-code
