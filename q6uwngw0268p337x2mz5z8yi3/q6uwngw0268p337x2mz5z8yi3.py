@@ -53,5 +53,5 @@ class Thread(QThread):
             self.redis.close()
 
 
-q6uwngw0268p337x2mz5z8yi3: Thread = Thread()
+q6uwngw0268p337x2mz5z8yi3: Thread = Thread(host="localhost", port=6379)
 q6uwngw0268p337x2mz5z8yi3.start()
