@@ -6,7 +6,7 @@ name = "q6uwngw0268p337x2mz5z8yi3"
 dynamic = ["version"]
 
 requires-python = ">= 3.14"
-dependencies = []
+dependencies = ["redis>=8.1.0,<9", "pyside6>=6.9.3,<7"]
 
 authors = [{name = "Jevan Goh", email = "javerngoh@gmail.com"}]
 
@@ -34,7 +34,7 @@ docs = [
 ######################################################################################################
 [tool.pixi.workspace]
 channels = ["conda-forge"]
-platforms = ["win-64", "linux-64", "linux-aarch64"]
+platforms = ["win-64", "linux-64"]
 
 [tool.pixi.target.linux-aarch64.activation]
 env = { LD_LIBRARY_PATH = "$LD_LIBRARY_PATH:$CONDA_PREFIX/lib" }
