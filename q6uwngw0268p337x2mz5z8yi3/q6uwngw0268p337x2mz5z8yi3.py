@@ -22,7 +22,7 @@ class Thread(QThread):
         self.unsubscriptions_queue.put(channel_name)
 
     def run(self) -> None:
-        _subscriber_: Subscriber = self.redis.pubsub()
+        _subscriber_: Subscriber = self.redis.pubsub()  # type: ignore[no-untyped-call]
 
         try:
             while True:
