@@ -49,7 +49,7 @@ class Thread(QThread):
                 while True:
                     try:
                         _await_event_, _channel_name_ = self.unsubscriptions_queue.get_nowait()
-                        _subscriber_.unsubscribe(_channel_name_)
+                        _subscriber_.unsubscribe(_channel_name_)  # type: ignore[no-untyped-call]
                         _await_event_.set()
                     except Empty:
                         break
