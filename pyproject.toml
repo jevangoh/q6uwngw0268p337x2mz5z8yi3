@@ -61,6 +61,7 @@ git = ">=2.56.0,<3"
 gh = ">=2.102.0,<3"
 nodejs = ">=26.10.0,<26.11"
 prettier = ">=3.9.6,<4"
+doppler-cli = ">=3.77.1,<4"
 
 [tool.pixi.feature.dev.tasks]
 setup = "prek install"
@@ -84,8 +85,10 @@ markdown-gfm-admonition = ">=0.3.0, <0.4"
 
 [tool.pixi.feature.docs.tasks]
 build_docs = "zensical build --config-file zensical.toml"
-create_readthedocs = "curl -f -s -X POST https://app.readthedocs.org/api/v3/projects/ -H \"Authorization: Token $PA0DBVCU05YKU48G8HCUNB2G3\" -H \"Content-Type: application/json\" -d '{\"name\": \"q6uwngw0268p337x2mz5z8yi3\", \"repository\": {\"url\": \"https://github.com/jevangoh/q6uwngw0268p337x2mz5z8yi3\", \"type\": \"git\"}, \"default_branch\": \"main\", \"programming_language\": \"py\"}'"
-build_readthedocs = "curl -f -s -X POST https://app.readthedocs.org/api/v3/projects/q6uwngw0268p337x2mz5z8yi3/versions/main/builds/ -H \"Authorization: Token $PA0DBVCU05YKU48G8HCUNB2G3\""
+create_readthedocs_with_manual_secrets_injection = "curl -f -s -X POST https://app.readthedocs.org/api/v3/projects/ -H \"Authorization: Token $PA0DBVCU05YKU48G8HCUNB2G3\" -H \"Content-Type: application/json\" -d '{\"name\": \"q6uwngw0268p337x2mz5z8yi3\", \"repository\": {\"url\": \"https://github.com/jevangoh/q6uwngw0268p337x2mz5z8yi3\", \"type\": \"git\"}, \"default_branch\": \"main\", \"programming_language\": \"py\"}'"
+create_readthedocs = "doppler run --token \"$AZU4V7WTFF38YLYNTQXQI0B7G\" -- pixi run create_readthedocs_with_manual_secrets_injection"
+build_readthedocs_with_manual_secrets_injection = "curl -f -s -X POST https://app.readthedocs.org/api/v3/projects/q6uwngw0268p337x2mz5z8yi3/versions/main/builds/ -H \"Authorization: Token $PA0DBVCU05YKU48G8HCUNB2G3\""
+build_readthedocs = "doppler run --token \"$AZU4V7WTFF38YLYNTQXQI0B7G\" -- pixi run build_readthedocs_with_manual_secrets_injection"
 
 ######################################################################################################
 #                                                ruff                                                #

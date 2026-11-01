@@ -77,6 +77,7 @@ environments:
         - conda: https://conda.anaconda.org/conda-forge/linux-64/bzip2-1.0.8-hda65f42_10.conda
         - conda: https://conda.anaconda.org/conda-forge/linux-64/c-ares-1.34.9-hebe6cf0_0.conda
         - conda: https://conda.anaconda.org/conda-forge/linux-64/curl-8.23.0-ha042cf0_0.conda
+        - conda: https://conda.anaconda.org/conda-forge/linux-64/doppler-cli-3.77.1-hfc2019e_0.conda
         - conda: https://conda.anaconda.org/conda-forge/linux-64/gh-2.102.1-hfc2019e_0.conda
         - conda: https://conda.anaconda.org/conda-forge/linux-64/git-2.56.0-pl5440h3795e67_0.conda
         - conda: https://conda.anaconda.org/conda-forge/linux-64/icu-78.3-py310h44b86e0_2.conda
@@ -165,6 +166,7 @@ environments:
         - conda: https://conda.anaconda.org/conda-forge/noarch/tzdata-2026c-h151e31d_0.conda
         - conda: https://conda.anaconda.org/conda-forge/win-64/bzip2-1.0.8-h0ad9c76_10.conda
         - conda: https://conda.anaconda.org/conda-forge/win-64/curl-8.23.0-hdb0ef4a_0.conda
+        - conda: https://conda.anaconda.org/conda-forge/win-64/doppler-cli-3.77.1-h11686cb_0.conda
         - conda: https://conda.anaconda.org/conda-forge/win-64/gh-2.102.1-h11686cb_0.conda
         - conda: https://conda.anaconda.org/conda-forge/win-64/git-2.56.0-h57928b3_0.conda
         - conda: https://conda.anaconda.org/conda-forge/win-64/icu-78.3-h5112557_2.conda
@@ -296,6 +298,15 @@ packages:
     run_exports: {}
     size: 197652
     timestamp: 1791990906207
+  - conda: https://conda.anaconda.org/conda-forge/linux-64/doppler-cli-3.77.1-hfc2019e_0.conda
+    sha256: 24062d0b987fbed5b91e112bfda96de5f0f3dc27ccb5ce7e9d3bf57ca46844a2
+    md5: ee3fbf76a1ca2bc340db468f92f516f0
+    license: MIT
+    license_family: MIT
+    purls: []
+    run_exports: {}
+    size: 4953727
+    timestamp: 1792689950969
   - conda: https://conda.anaconda.org/conda-forge/linux-64/gh-2.102.1-hfc2019e_0.conda
     sha256: 789b3b22557f1bd59852c18bbab516946d48069a23602a35e8d6453b43f79696
     md5: 9f75d8740b1b0ad898aed91e9741ef77
@@ -985,6 +996,15 @@ packages:
     run_exports: {}
     size: 193244
     timestamp: 1791990849265
+  - conda: https://conda.anaconda.org/conda-forge/win-64/doppler-cli-3.77.1-h11686cb_0.conda
+    sha256: 36d627d3bf070f64e2728f3b7f1e4ca851c9fc0bf693c9a0882b193e7c95ab6d
+    md5: 004b364740b95e6635a93f5d3af2e6ee
+    license: MIT
+    license_family: MIT
+    purls: []
+    run_exports: {}
+    size: 4722802
+    timestamp: 1792689951131
   - conda: https://conda.anaconda.org/conda-forge/win-64/gh-2.102.1-h11686cb_0.conda
     sha256: 4f2535fe285dd2b8f0476219e31c248da01e7bb852b95a8dc1ef2904da4fa97f
     md5: 7211c46be7568e2f2dadd3a602ea61f8
