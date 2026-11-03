@@ -38,6 +38,7 @@ environments:
         - pypi: https://files.pythonhosted.org/packages/66/9d/c5731f6e3608663d4d3656fd8d3aecee8b509c3082818f5a13eae925baea/redis-8.1.0-py3-none-any.whl
         - pypi: https://files.pythonhosted.org/packages/85/e8/9396cf11a60f80175bb3c5c1d498d84e87b7af653ab4ea001acf821a3981/pyside6_essentials-6.9.3-cp39-abi3-manylinux_2_28_x86_64.whl
         - pypi: https://files.pythonhosted.org/packages/be/82/c1c6932f9849bc5e75c93c38a29419505a6e3e0037261e28f3e7ecbf2751/shiboken6-6.9.3-cp39-abi3-manylinux_2_28_x86_64.whl
+        - pypi: https://github.com/jevangoh/msjzm0ilrcvjjguhp29y62uzk/releases/download/v0.0.1/msjzm0ilrcvjjguhp29y62uzk-0.0.1-py3-none-any.whl
       win-64:
         - conda: https://conda.anaconda.org/conda-forge/noarch/ca-certificates-2026.10.19-h4c7d964_0.conda
         - conda: https://conda.anaconda.org/conda-forge/noarch/python_abi-3.15-9_cp315.conda
@@ -65,6 +66,7 @@ environments:
         - pypi: https://files.pythonhosted.org/packages/2a/b6/bee97e7a2edeab72aafabb46ee5adc939790a638d107860b4cad7a20e407/shiboken6-6.12.0-cp310-abi3-win_amd64.whl
         - pypi: https://files.pythonhosted.org/packages/66/9d/c5731f6e3608663d4d3656fd8d3aecee8b509c3082818f5a13eae925baea/redis-8.1.0-py3-none-any.whl
         - pypi: https://files.pythonhosted.org/packages/a1/da/8e8514fc29ea916c3cd71a524480b77409e19ed12d709e8a5d73be089b81/pyside6-6.12.0-cp310-abi3-win_amd64.whl
+        - pypi: https://github.com/jevangoh/msjzm0ilrcvjjguhp29y62uzk/releases/download/v0.0.1/msjzm0ilrcvjjguhp29y62uzk-0.0.1-py3-none-any.whl
   dev:
     channels:
       - url: https://conda.anaconda.org/conda-forge/
@@ -160,6 +162,7 @@ environments:
         - pypi: https://files.pythonhosted.org/packages/fc/86/ce4288122111c11bb2483a962357baa9793817d48ac1e99ce5ff47384efe/markdown_gfm_admonition-0.3.0-py3-none-any.whl
         - pypi: https://files.pythonhosted.org/packages/fd/dc/e72a1449544aeffa3dbe878c6340bcec98ba4eebabe7a592414064b0ae8d/zensical-0.0.47-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
         - pypi: https://files.pythonhosted.org/packages/fe/66/bcab3b677b71ad286b4e607e3427499537c76e13ad2e22584ba7a7d9882c/markdown-3.11.2-py3-none-any.whl
+        - pypi: https://github.com/jevangoh/msjzm0ilrcvjjguhp29y62uzk/releases/download/v0.0.1/msjzm0ilrcvjjguhp29y62uzk-0.0.1-py3-none-any.whl
       win-64:
         - conda: https://conda.anaconda.org/conda-forge/noarch/ca-certificates-2026.10.19-h4c7d964_0.conda
         - conda: https://conda.anaconda.org/conda-forge/noarch/python_abi-3.15-9_cp315.conda
@@ -233,6 +236,7 @@ environments:
         - pypi: https://files.pythonhosted.org/packages/f9/7a/7daaeadfdf7dc2941c8b931f9c6c83396d1da45634cec1a28f8d85a57708/zensical-0.0.47-cp310-abi3-win_amd64.whl
         - pypi: https://files.pythonhosted.org/packages/fc/86/ce4288122111c11bb2483a962357baa9793817d48ac1e99ce5ff47384efe/markdown_gfm_admonition-0.3.0-py3-none-any.whl
         - pypi: https://files.pythonhosted.org/packages/fe/66/bcab3b677b71ad286b4e607e3427499537c76e13ad2e22584ba7a7d9882c/markdown-3.11.2-py3-none-any.whl
+        - pypi: https://github.com/jevangoh/msjzm0ilrcvjjguhp29y62uzk/releases/download/v0.0.1/msjzm0ilrcvjjguhp29y62uzk-0.0.1-py3-none-any.whl
 packages:
   - conda: https://conda.anaconda.org/conda-forge/linux-64/_openmp_mutex-4.5-20_gnu.conda
     build_number: 20
@@ -1353,6 +1357,7 @@ packages:
   - pypi: .
     name: q6uwngw0268p337x2mz5z8yi3
     requires_dist:
+      - msjzm0ilrcvjjguhp29y62uzk>=0.0.1,<0.0.2
       - pyside6>=6.9.3,<7
       - redis>=8.1.0,<9
     requires_python: ">=3.14"
@@ -1781,3 +1786,10 @@ packages:
       - justhtml==3.11.2 ; extra == 'docs'
       - ghp-import==2.1.0 ; extra == 'docs'
     requires_python: ">=3.11"
+  - pypi: https://github.com/jevangoh/msjzm0ilrcvjjguhp29y62uzk/releases/download/v0.0.1/msjzm0ilrcvjjguhp29y62uzk-0.0.1-py3-none-any.whl
+    name: msjzm0ilrcvjjguhp29y62uzk
+    version: 0.0.1
+    index: https://jevangoh.github.io/as1oocnl0leb61sj1yew20lt2/
+    requires_dist:
+      - redis>=8.1.0,<9
+    requires_python: ">=3.14"

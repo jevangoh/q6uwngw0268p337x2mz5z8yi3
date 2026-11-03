@@ -2,9 +2,10 @@ from typing import TypeAlias
 from uuid import UUID as Uuid
 from json import loads
 
-from redis import Redis
 from redis.client import PubSub as Subscriber
 from PySide6.QtCore import QThread, Signal, QObject
+
+import msjzm0ilrcvjjguhp29y62uzk as the_redis_client
 
 RequestId: TypeAlias = Uuid
 ObjectId: TypeAlias = Uuid
@@ -15,11 +16,8 @@ class _UpdatedSignal(QObject):
 
 
 class Thread(QThread):
-    def __init__(self, host: str, port: int):
+    def __init__(self):
         super().__init__()
-        self.host: str = host
-        self.port: int = port
-        self.redis: Redis = Redis(host=host, port=port, decode_responses=True)
         self.active_objects: dict[str, _UpdatedSignal] = {}
 
     def register(self, object_id: str) -> None:
@@ -29,7 +27,7 @@ class Thread(QThread):
         self.active_objects.pop(object_id, None)
 
     def run(self) -> None:
-        _subscriber_: Subscriber = self.redis.pubsub()  # type: ignore[no-untyped-call]
+        _subscriber_: Subscriber = the_redis_client._.pubsub()  # type: ignore[no-untyped-call]
         _subscriber_.subscribe("updated")
 
         try:
@@ -47,8 +45,7 @@ class Thread(QThread):
                         self.active_objects[_object_id_].updated.emit(_request_id_)
         finally:
             _subscriber_.close()
-            self.redis.close()
 
 
-q6uwngw0268p337x2mz5z8yi3: Thread = Thread(host="localhost", port=6379)
+q6uwngw0268p337x2mz5z8yi3: Thread = Thread()
 q6uwngw0268p337x2mz5z8yi3.start()
