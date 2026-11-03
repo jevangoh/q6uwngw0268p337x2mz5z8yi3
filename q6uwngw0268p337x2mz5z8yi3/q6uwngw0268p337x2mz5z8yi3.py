@@ -18,12 +18,12 @@ class _UpdatedSignal(QObject):
 class Thread(QThread):
     def __init__(self):
         super().__init__()
-        self.active_objects: dict[str, _UpdatedSignal] = {}
+        self.active_objects: dict[ObjectId, _UpdatedSignal] = {}
 
-    def register(self, object_id: str) -> None:
+    def register(self, object_id: ObjectId) -> None:
         self.active_objects[object_id] = _UpdatedSignal()
 
-    def unregister(self, object_id: str) -> None:
+    def unregister(self, object_id: ObjectId) -> None:
         self.active_objects.pop(object_id, None)
 
     def run(self) -> None:
