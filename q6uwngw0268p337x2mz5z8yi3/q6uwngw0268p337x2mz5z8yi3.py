@@ -16,7 +16,7 @@ class _UpdatedSignal(QObject):
 
 
 class Thread(QThread):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.active_objects: dict[ObjectId, _UpdatedSignal] = {}
 
