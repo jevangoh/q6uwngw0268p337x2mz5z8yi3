@@ -1,34 +1,36 @@
-from typing import TypeAlias
-from uuid import UUID as Uuid
 from json import loads
-
-from redis.client import PubSub as Subscriber
-from PySide6.QtCore import QThread, Signal, QObject
+from uuid import UUID as Uuid
 
 import msjzm0ilrcvjjguhp29y62uzk as the_redis_client
+from PySide6.QtCore import QObject, QThread, Signal
+from redis.client import PubSub as Subscriber
 
-RequestId: TypeAlias = Uuid
-ObjectId: TypeAlias = Uuid
+type RequestId = Uuid
+type ObjectId = Uuid
 
 
-class _UpdatedSignal(QObject):
-    updated = Signal(RequestId)
+class _Signal(QObject):
+    emitted = Signal(RequestId)
 
 
 class Thread(QThread):
     def __init__(self) -> None:
         super().__init__()
-        self.active_objects: dict[ObjectId, _UpdatedSignal] = {}
+        self.update_signals: dict[ObjectId, _Signal] = {}
+        self.delete_signals: dict[ObjectId, _Signal] = {}
 
     def register(self, object_id: ObjectId) -> None:
-        self.active_objects[object_id] = _UpdatedSignal()
+        self.update_signals[object_id] = _Signal()
+        self.delete_signals[object_id] = _Signal()
 
     def unregister(self, object_id: ObjectId) -> None:
-        self.active_objects.pop(object_id, None)
+        self.update_signals.pop(object_id, None)
+        self.delete_signals.pop(object_id, None)
 
     def run(self) -> None:
         _subscriber_: Subscriber = the_redis_client._.pubsub()  # type: ignore[no-untyped-call]
         _subscriber_.subscribe("updated")
+        _subscriber_.subscribe("deleted")
 
         try:
             while True:
@@ -38,11 +40,18 @@ class Thread(QThread):
                 if _message_["type"] != "message":
                     continue
                 _channel_: str = _message_["channel"]
-                if _channel_ == "updated":
-                    _object_id_: ObjectId = ObjectId(loads(_message_["data"])["object_id"])
-                    _request_id_: RequestId = RequestId(loads(_message_["data"])["request_id"])
-                    if _object_id_ in self.active_objects:
-                        self.active_objects[_object_id_].updated.emit(_request_id_)
+                match _channel_:
+                    case "updated":
+                        _object_id_: ObjectId = ObjectId(loads(_message_["data"])["object_id"])
+                        _request_id_: RequestId = RequestId(loads(_message_["data"])["request_id"])
+                        if _object_id_ in self.update_signals:
+                            self.update_signals[_object_id_].emitted.emit(_request_id_)
+                    case "deleted":
+                        _object_id_: ObjectId = ObjectId(loads(_message_["data"])["object_id"])
+                        _request_id_: RequestId = RequestId(loads(_message_["data"])["request_id"])
+                        if _object_id_ in self.delete_signals:
+                            self.delete_signals[_object_id_].emitted.emit(_request_id_)
+
         finally:
             _subscriber_.close()
 
