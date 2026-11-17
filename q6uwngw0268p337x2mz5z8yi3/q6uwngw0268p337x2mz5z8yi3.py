@@ -10,7 +10,7 @@ type _ObjectId = Uuid
 
 
 class _Signal(QObject):
-    emitted = Signal(Uuid)
+    emitted = Signal(Uuid)  # request id
 
 
 class Thread(QThread):
