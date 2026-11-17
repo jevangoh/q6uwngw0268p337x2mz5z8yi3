@@ -1,4 +1,5 @@
-from importlib.metadata import version, PackageNotFoundError
+from importlib.metadata import PackageNotFoundError, version
+
 from .q6uwngw0268p337x2mz5z8yi3 import q6uwngw0268p337x2mz5z8yi3 as _
 
 try:
