@@ -42,15 +42,23 @@ class Thread(QThread):
                 _channel_: str = _message_["channel"]
                 match _channel_:
                     case "updated":
-                        _object_id_: ObjectId = ObjectId(loads(_message_["data"])["object_id"])
-                        _request_id_: RequestId = RequestId(loads(_message_["data"])["request_id"])
-                        if _object_id_ in self.update_signals:
-                            self.update_signals[_object_id_].emitted.emit(_request_id_)
+                        _updated_object_id_: ObjectId = Uuid(loads(_message_["data"])["object_id"])
+                        _updated_request_id_: RequestId = Uuid(
+                            loads(_message_["data"])["request_id"]
+                        )
+                        if _updated_object_id_ in self.update_signals:
+                            self.update_signals[_updated_object_id_].emitted.emit(
+                                _updated_request_id_
+                            )
                     case "deleted":
-                        _object_id_: ObjectId = ObjectId(loads(_message_["data"])["object_id"])
-                        _request_id_: RequestId = RequestId(loads(_message_["data"])["request_id"])
-                        if _object_id_ in self.delete_signals:
-                            self.delete_signals[_object_id_].emitted.emit(_request_id_)
+                        _deleted_object_id_: ObjectId = Uuid(loads(_message_["data"])["object_id"])
+                        _deleted_request_id_: RequestId = Uuid(
+                            loads(_message_["data"])["request_id"]
+                        )
+                        if _deleted_object_id_ in self.delete_signals:
+                            self.delete_signals[_deleted_object_id_].emitted.emit(
+                                _deleted_request_id_
+                            )
 
         finally:
             _subscriber_.close()
