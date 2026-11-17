@@ -5,25 +5,25 @@ import msjzm0ilrcvjjguhp29y62uzk as the_redis_client
 from PySide6.QtCore import QObject, QThread, Signal
 from redis.client import PubSub as Subscriber
 
-type RequestId = Uuid
-type ObjectId = Uuid
+type _RequestId = Uuid
+type _ObjectId = Uuid
 
 
 class _Signal(QObject):
-    emitted = Signal(RequestId)
+    emitted = Signal(_RequestId)
 
 
 class Thread(QThread):
     def __init__(self) -> None:
         super().__init__()
-        self.update_signals: dict[ObjectId, _Signal] = {}
-        self.delete_signals: dict[ObjectId, _Signal] = {}
+        self.update_signals: dict[_ObjectId, _Signal] = {}
+        self.delete_signals: dict[_ObjectId, _Signal] = {}
 
-    def register(self, object_id: ObjectId) -> None:
+    def register(self, object_id: _ObjectId) -> None:
         self.update_signals[object_id] = _Signal()
         self.delete_signals[object_id] = _Signal()
 
-    def unregister(self, object_id: ObjectId) -> None:
+    def unregister(self, object_id: _ObjectId) -> None:
         self.update_signals.pop(object_id, None)
         self.delete_signals.pop(object_id, None)
 
@@ -42,8 +42,8 @@ class Thread(QThread):
                 _channel_: str = _message_["channel"]
                 match _channel_:
                     case "updated":
-                        _updated_object_id_: ObjectId = Uuid(loads(_message_["data"])["object_id"])
-                        _updated_request_id_: RequestId = Uuid(
+                        _updated_object_id_: _ObjectId = Uuid(loads(_message_["data"])["object_id"])
+                        _updated_request_id_: _RequestId = Uuid(
                             loads(_message_["data"])["request_id"]
                         )
                         if _updated_object_id_ in self.update_signals:
@@ -51,8 +51,8 @@ class Thread(QThread):
                                 _updated_request_id_
                             )
                     case "deleted":
-                        _deleted_object_id_: ObjectId = Uuid(loads(_message_["data"])["object_id"])
-                        _deleted_request_id_: RequestId = Uuid(
+                        _deleted_object_id_: _ObjectId = Uuid(loads(_message_["data"])["object_id"])
+                        _deleted_request_id_: _RequestId = Uuid(
                             loads(_message_["data"])["request_id"]
                         )
                         if _deleted_object_id_ in self.delete_signals:
